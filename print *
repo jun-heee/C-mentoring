@@ -1,0 +1,22 @@
+// *을 엑스 모양으로 출력
+
+#include <stdio.h>
+
+int main()
+{
+	int i, j = 0;
+
+
+	for (i = 0; i < 5; i++)
+	{
+		for (j = 0; j < 5; j++) 
+		{
+			if (i + j == 4 || i == j)
+				printf("*");
+			else
+				printf(" ");
+			
+		}
+		printf("\n");
+	}
+}
