@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <conio.h>
+
+int level = 1;
+int HP = 500;
+float ATK = 50;
+
+void level_Up();
+void print_Status();
+
+int main()
+{
+	while(1)
+	{
+		char action;
+		print_Status();
+		printf("행동을 입력하세요 (a(슬래쉬) / b(바디 태클) / c(파워 슬래쉬) / x(종료) / l(레벨업)) : ");
+		
+		action = getchar();
+		getchar();
+		if (action == 'a')
+		{
+			printf("슬래쉬!\n%lf의 데미지!\n", ATK * 1.5);
+		}
+		else if (action == 'b')
+		{
+			printf("바디 태클!\n%lf의 데미지!\n", ATK * 1.7);
+		}
+		else if (action == 'c')
+		{
+			printf("파워 슬래쉬!\n%lf의 데미지!\n", ATK * 2);
+		}
+		else if (action == 'x')
+		{
+			break;
+		}
+		else if (action == 'l')
+		{
+			level_Up();
+		}
+	}
+}
+
+void level_Up()
+{
+	level += 1;
+	HP += (level - 1) * 50;
+	ATK += (level - 1) * 5;
+	printf("레벨 업!\n");
+}
+
+void print_Status()
+{
+	printf("레벨 : %d\n체력 : %d\n공격력 : %lf\n", level, HP, ATK);
+}
