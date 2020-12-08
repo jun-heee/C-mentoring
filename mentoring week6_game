@@ -1,0 +1,90 @@
+// 게임
+
+#include <stdio.h>
+#include <conio.h>
+
+typedef struct 
+{
+	char name;
+	int level;
+	int HP;
+	int ATK;
+	int exp;
+	int reqexp;
+}ch;
+
+void level_Up(ch *c);
+void e_level_Up(ch *c);
+void print_Status(ch c);
+
+
+int main()
+{
+	char action = 0;
+	ch me = {'\0', 1, 500, 50, 0, 100}, enemy = {'\0', 1, 200, 10, 50, 0};
+
+	while(action != 1)
+	{
+		char action = '\0';
+		print_Status(me);
+		printf("행동을 입력하세요 (a(슬래쉬) / b(바디 태클) / c(파워 슬래쉬) / x(종료)) : ");
+		
+		scanf("%c", &action);
+		getchar();
+		printf("\n");
+
+		if (action == 'a')
+		{
+			printf("슬래쉬!\n%d의 데미지!\n\n", me.ATK * 1);
+			enemy.HP -= me.ATK;
+		}
+		else if (action == 'b')
+		{
+			printf("바디 태클!\n%d의 데미지!\n\n", me.ATK * 2);
+			enemy.HP -= me.ATK * 2;
+		}
+		else if (action == 'c')
+		{
+			printf("파워 슬래쉬!\n%d의 데미지!\n\n", me.ATK * 3);
+			enemy.HP -= me.ATK * 3;
+		}
+		else if (action == 'x')
+		{
+			return 1;
+		}
+
+		if (enemy.HP <= 0)
+		{
+			me.exp += enemy.exp;
+			printf("몬스터 처치!\n\n");
+			enemy.HP = 200 + (enemy.level - 1) * 50;
+		}
+		if (me.exp >= me.reqexp)
+		{
+			me.exp -= me.reqexp;
+			level_Up(&me);
+			e_level_Up(&enemy);
+		}
+	}
+}
+
+void level_Up(ch *c)
+{
+	c->level += 1;
+	c->HP = (c->level) * 50;
+	c->ATK = 50 + (c->level) * 10;
+	c->reqexp += (c->level - 1) * 10;
+	printf("레벨 업!\n");
+}
+
+void e_level_Up(ch *c)
+{
+	c->level += 1;
+	c->HP = 150 + (c->level) * 50;
+	c->ATK = (c->level) * 5;
+}
+
+void print_Status(ch c)
+{
+	printf("레벨 : %d\n체력 : %d\n공격력 : %d\n", c.level, c.HP, c.ATK);
+}
